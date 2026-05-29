@@ -82,8 +82,7 @@ main{
 .hero-content h1{
   max-width:720px;
 
-  margin:0 0 12px;
-  margin-top:40px;
+  margin:40px auto 12px;
 
   font-size:2.8rem;
   line-height:1.08;
@@ -96,16 +95,28 @@ main{
   margin-bottom:18px;
 }
 
+/* Logo placed above the hero brand name */
+.logo-container{
+  text-align:center;
+  margin-bottom:12px;
+}
+.site-logo{
+  width:90px;
+  height:auto;
+  display:inline-block;
+}
+
 .hero-brand-name{
   font-family:"Poppins", sans-serif;
 
   text-align:center;
   text-transform:uppercase;
 
+  margin-top:20px;
   font-size:3.5rem;
   font-weight:700;
-  letter-spacing:0.1em;
-  max-width:750px;
+  letter-spacing:0.01em;
+  max-width:1300px;
   color:var(--purple-900);
 }
 
@@ -122,7 +133,7 @@ main{
 }
 
 .hero-tag{
-  margin-top:60px;
+  margin-top:-40px;
   margin-bottom:18px;
 
   text-align:center;
@@ -137,7 +148,7 @@ main{
 .lead{
   max-width:800px;
 
-  margin-bottom:18px;
+  margin:0 auto 18px;
 
   text-align:center;
 
@@ -287,6 +298,18 @@ main{
   color:var(--muted);
 }
 
+.section-note{
+  max-width:800px;
+
+  margin-bottom:20px;
+  margin-left:auto;
+  margin-right:auto;
+
+  text-align:center;
+
+  color:var(--muted);
+}
+
 
 /* =========================
    ABOUT SECTION
@@ -416,6 +439,55 @@ main{
   background-color:#f8f5f1;
 }
 
+/* Furniture page gallery */
+.site-header{
+  padding:18px 0;
+  border-bottom:1px solid rgba(0,0,0,0.04);
+  background:var(--bg);
+}
+.brand-logo{
+  display:inline-block;
+  border-radius:8px;
+  object-fit:contain;
+}
+.product-gallery{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+  margin-top:18px;
+}
+.product-card{
+  background:rgba(255,255,255,0.9);
+  border-radius:12px;
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  align-items:center;
+  border:1px solid rgba(0,0,0,0.04);
+}
+.product-card img{
+  display:block;
+  width:100%;
+  height:220px; /* consistent visible frame height */
+  object-fit:contain; /* don't crop or zoom — fit inside frame */
+  border-radius:8px;
+  background:linear-gradient(180deg,#f6f6f6,#eee);
+}
+.product-desc h4{
+  margin:0;
+  font-size:1.05rem;
+}
+.product-desc p{
+  margin:0;
+  color:var(--muted);
+  font-size:0.95rem;
+}
+
+@media (max-width:900px){
+  .product-gallery{grid-template-columns:1fr;}
+}
+
 
 /* =========================
    CONTACT SECTION
@@ -443,6 +515,18 @@ main{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:18px;
+}
+
+/* Make entire card clickable when wrapped in an anchor */
+.card-link{
+  display:block;
+  color:inherit;
+  text-decoration:none;
+}
+.card-link:focus-visible{
+  outline:3px solid rgba(91,44,131,0.12);
+  outline-offset:3px;
+  border-radius:24px;
 }
 
 .card{
@@ -790,8 +874,19 @@ textarea:focus{
     font-size:3rem;
   }
 
+  .site-logo{
+    width:88px;
+  }
+
   .hero-brand-sub{
     margin-top:-40px;
     font-size:0.9rem;
+  }
+}
+
+/* Responsive product image sizing */
+@media (max-width:900px){
+  .product-card img{
+    height:150px;
   }
 }
