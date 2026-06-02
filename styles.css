@@ -881,28 +881,6 @@ textarea{
 
 
 /* =========================
-   FOOTER
-========================= */
-
-.site-footer{
-  margin-top:40px;
-  padding:18px 0;
-
-  border-top:1px solid rgba(0,0,0,0.04);
-}
-
-.footer-inner{
-  margin-left:12px;
-
-  text-align:center;
-
-  text-decoration:none;
-
-  color:var(--muted);
-}
-
-
-/* =========================
    REVEAL ANIMATIONS
 ========================= */
 
