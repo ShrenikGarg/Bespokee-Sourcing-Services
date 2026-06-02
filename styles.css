@@ -965,16 +965,11 @@ textarea:focus{
   margin:0 12px;
   border-radius:8px !important;
   box-shadow:none;
-  transition:transform .28s ease;
 }
 
 /* Fallback visible outline to help debugging (remove in production) */
 .hg-slide img[alt]{
   outline: 1px solid rgba(0,0,0,0.03);
-}
-
-.hg-slide img:hover{
-  transform:translateY(-6px);
 }
 
 

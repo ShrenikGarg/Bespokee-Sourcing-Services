@@ -54,7 +54,7 @@ function initHorizontalGallery(){
 
     let slideWidth = 0;
     let current = 0;
-    const intervalTime = 5000;
+    const intervalTime = 3000;
     let paused = false;
     let timer = null;
 
