@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin — Bespokee Sourcing Services</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { background:#f7f3f9; }
+    .admin-page { max-width:960px; margin:0 auto; padding:36px 20px; }
+    .admin-panel { background:#fff; border-radius:24px; box-shadow:0 20px 60px rgba(43,20,78,.08); padding:32px; }
+    .admin-panel h1, .admin-panel h2 { margin:0 0 18px; }
+    .admin-form { margin-top:24px; }
+    .admin-form label { display:block; margin-bottom:8px; color:#423154; font-weight:700; }
+    .admin-form input, .admin-form textarea, .admin-form select { width:100%; padding:14px 16px; border:1px solid rgba(83,63,110,.18); border-radius:12px; font:inherit; margin-bottom:18px; }
+    .admin-form button, .admin-actions button { appearance:none; cursor:pointer; border:none; border-radius:12px; padding:14px 20px; font:inherit; background:#5B2C83; color:#fff; }
+    .admin-actions button { background:#ece3f1; color:#4a2a65; }
+    .admin-actions { display:flex; flex-wrap:wrap; gap:12px; margin-bottom:24px; }
+    .admin-message { padding:14px 18px; border-radius:14px; margin-bottom:24px; display:none; }
+    .admin-message.success { background:#e9f5ef; color:#1f5a3d; }
+    .admin-message.error { background:#fde7e7; color:#821d2d; }
+    .admin-table { width:100%; border-collapse:collapse; margin-top:14px; }
+    .admin-table th, .admin-table td { padding:12px 10px; border-bottom:1px solid rgba(0,0,0,.08); text-align:left; }
+    .admin-table img { display:block; max-width:80px; border-radius:10px; }
+    .admin-loading { font-weight:700; color:#5B2C83; }
+    .hero-ctas a { min-width:160px; }
+  </style>
+</head>
+<body>
+  <div class="admin-page">
+    <div class="admin-panel">
+      <header>
+        <h1>Admin dashboard</h1>
+        <p>Use this page to log in and manage product cards. Normal visitors do not need to log in.</p>
+      </header>
+
+      <div id="admin-message" class="admin-message"></div>
+
+      <section id="admin-login" class="admin-login">
+        <h2>Sign in</h2>
+        <form id="login-form" class="admin-form">
+          <label for="admin-password">Admin password</label>
+          <input id="admin-password" name="password" type="password" autocomplete="current-password" required>
+          <button type="submit">Log in</button>
+        </form>
+      </section>
+
+      <section id="admin-dashboard" class="admin-dashboard" style="display:none;">
+        <div class="admin-actions">
+          <button id="logout-button" type="button">Logout</button>
+        </div>
+
+        <div class="admin-form">
+          <h2>Add new card item</h2>
+          <form id="new-card-form">
+            <label for="card-category">Category</label>
+            <select id="card-category" name="category" required>
+              <option value="Bath Accessories">Bath Accessories</option>
+              <option value="Decorative Accessories">Decorative Accessories</option>
+              <option value="Fashion & Women's Accessories">Fashion & Women's Accessories</option>
+              <option value="Floor Coverings">Floor Coverings</option>
+              <option value="Furniture">Furniture</option>
+              <option value="Home Furnishing Textiles">Home Furnishing Textiles</option>
+              <option value="Kids & Nursery Products">Kids & Nursery Products</option>
+              <option value="Lighting">Lighting</option>
+              <option value="Pet Products">Pet Products</option>
+            </select>
+
+            <label for="card-title">Title</label>
+            <input id="card-title" name="title" type="text" required>
+
+            <label for="card-description">Description</label>
+            <textarea id="card-description" name="description" rows="4" required></textarea>
+
+            <label for="card-image">Image</label>
+            <input id="card-image" name="image" type="file" accept="image/*" required>
+            
+            <button type="submit">Upload and save</button>
+          </form>
+        </div>
+
+        <div class="admin-card-list">
+          <h2>Existing card items</h2>
+          <div id="card-list-container" class="admin-loading">Loading cards…</div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

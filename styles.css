@@ -54,17 +54,13 @@ main{
 ========================= */
 
 .hero{
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-
+  position:relative;
   width:100%;
-  min-height:100vh;
+  min-height:65vh;
 
   z-index:10;
 
-  padding:56px 0;
+  padding:80px 0 40px;
 
   display:flex;
   align-items:center;
@@ -101,9 +97,10 @@ main{
   margin-bottom:12px;
 }
 .site-logo{
-  width:90px;
+  width:110px;
   height:auto;
   display:inline-block;
+  margin-top: -60px;
 }
 
 .hero-brand-name{
@@ -112,7 +109,7 @@ main{
   text-align:center;
   text-transform:uppercase;
 
-  margin-top:20px;
+  margin-top:30px;
   font-size:3.5rem;
   font-weight:700;
   letter-spacing:0.01em;
@@ -121,7 +118,7 @@ main{
 }
 
 .hero-brand-sub{
-  margin-top:-100px;
+  margin-top:-110px;
 
   text-align:center;
   text-transform:uppercase;
@@ -142,19 +139,19 @@ main{
   font-size:1rem;
   letter-spacing:0.35em;
 
-  color:var(--pink);
+  color:var(--purple);
 }
 
 .lead{
   max-width:800px;
 
-  margin:0 auto 18px;
+  margin:20px auto 18px;
 
   text-align:center;
 
   font-size:1.1rem;
 
-  color:var(--pink);
+  color:var(--purple);
 }
 
 .hero-visual{
@@ -242,10 +239,10 @@ main{
 #gallery.section{
   position:relative;
 
-  height:100vh;
+  min-height:50vh;
 
   margin-top:0;
-  padding:0;
+  padding:40px 0;
 }
 
 .section.alt{
@@ -484,8 +481,115 @@ main{
   font-size:0.95rem;
 }
 
+@media (max-width:1200px){
+  .containers{
+    padding:0 40px;
+  }
+
+  .cards{
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width:900px){
-  .product-gallery{grid-template-columns:1fr;}
+  .hero-grid{
+    grid-template-columns:1fr;
+  }
+
+  .cards{
+    grid-template-columns:1fr;
+  }
+
+  .testimonials{
+    grid-template-columns:1fr;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .section-title{
+    font-size:1.75rem;
+  }
+
+  .containers{
+    padding:0 28px;
+  }
+
+  .hero-ctas{
+    flex-direction:column;
+    align-items:center;
+    gap:20px;
+  }
+
+  .hero-ctas a{
+    width:100%;
+    max-width:320px;
+  }
+
+  .hero-brand-name{
+    font-size:2.8rem;
+  }
+
+  .site-logo{
+    width:88px;
+  }
+
+  .hero-brand-sub{
+    margin-top:-40px;
+    font-size:0.92rem;
+  }
+
+  .contact-details{
+    grid-template-columns:1fr;
+  }
+}
+
+@media (max-width:700px){
+  .containers{
+    padding:0 20px;
+  }
+
+  .hero{
+    padding:60px 0 32px;
+  }
+
+  .hero-content h1{
+    font-size:2rem;
+    margin:24px auto 16px;
+  }
+
+  .hero-brand-name{
+    font-size:2.4rem;
+  }
+
+  .hero-tag{
+    letter-spacing:0.18em;
+  }
+
+  .card{
+    padding:24px;
+  }
+
+  .section-title{
+    font-size:1.5rem;
+  }
+
+  .section-sub,
+  .lead{
+    font-size:1rem;
+  }
+
+  .hero-grid,
+  .cards{
+    gap:20px;
+  }
+}
+
+@media (max-width:900px){
+  .product-card img{
+    height:150px;
+  }
 }
 
 
@@ -505,8 +609,54 @@ main{
 
   text-align:center;
 }
+.contact-details{
+  max-width:900px;
+  margin:40px auto 0;
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:24px;
+}
 
+.contact-card{
+  text-align:center;
+}
 
+.contact-card h3{
+  margin-bottom:12px;
+  color:var(--purple-900);
+}
+
+.contact-card p{
+  margin:0;
+  color:var(--muted);
+  word-break:break-word;
+}
+
+.contact-card a{
+  color:inherit;
+  text-decoration:none;
+}
+
+.contact-card a:hover,
+.contact-card a:focus{
+  text-decoration:underline;
+}
+
+.site-footer{
+  margin-top:40px;
+  padding:18px 16px;
+
+  border-top:1px solid rgba(0,0,0,0.04);
+}
+
+.footer-inner{
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 16px;
+  text-align:center;
+  text-decoration:none;
+  color:var(--muted);
+}
 /* =========================
    CARDS
 ========================= */
@@ -804,32 +954,48 @@ textarea:focus{
 
 .hg-viewport{
   border-radius:0;
+  overflow:hidden;
+  position:relative;
 }
 
 .hg-track{
   display:flex;
-  align-items:center;
+  align-items:stretch;
   gap:0;
-
   transform:translateZ(0);
 }
 
-.hg-viewport .hg-track img{
-  width:100%;
-  height:100vh;
-
+.hg-slide{
   flex:0 0 100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 
-  object-fit:cover;
+/* Ensure slides always reserve visible space so images are visible even before JS runs */
+.hg-slide{
+  min-height:60vh;
+}
 
-  border-radius:0 !important;
-
+.hg-slide img{
+  display:block;
+  width:auto;
+  height:auto;
+  max-height:80vh;
+  max-width:100%;
+  object-fit:contain;
+  margin:0 12px;
+  border-radius:8px !important;
   box-shadow:none;
-
   transition:transform .28s ease;
 }
 
-.hg-viewport .hg-track img:hover{
+/* Fallback visible outline to help debugging (remove in production) */
+.hg-slide img[alt]{
+  outline: 1px solid rgba(0,0,0,0.03);
+}
+
+.hg-slide img:hover{
   transform:translateY(-6px);
 }
 

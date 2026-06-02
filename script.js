@@ -48,30 +48,31 @@ function initHorizontalGallery(){
     const slides = Array.from(track.children);
     if (slides.length === 0) return;
 
-    // ensure track is set up for transform-based sliding
     track.style.display = 'flex';
     track.style.transition = 'transform .6s ease';
+    track.style.willChange = 'transform';
 
-    // set slide sizing (in case CSS didn't apply)
-    slides.forEach(slide => {
-      slide.style.flex = '0 0 100%';
-      slide.style.width = '100%';
-      if (slide.tagName === 'IMG'){
-        slide.style.width = '100%';
-        slide.style.height = slide.style.height || '';
-        slide.style.objectFit = 'cover';
-        slide.style.borderRadius = '12px';
-      }
-    });
-
+    let slideWidth = 0;
     let current = 0;
-    const intervalTime = 5000; // 5 seconds
+    const intervalTime = 5000;
     let paused = false;
     let timer = null;
 
+    function resizeGallery(){
+      slideWidth = Math.round(viewport.getBoundingClientRect().width);
+      if (slideWidth <= 0) return;
+
+      slides.forEach(slide => {
+        slide.style.flex = `0 0 ${slideWidth}px`;
+        slide.style.width = `${slideWidth}px`;
+      });
+
+      track.style.width = `${slides.length * slideWidth}px`;
+      update();
+    }
+
     function update(){
-      const percent = current * -100;
-      track.style.transform = `translateX(${percent}%)`;
+      track.style.transform = `translateX(-${current * slideWidth}px)`;
     }
     function next(){ current = (current + 1) % slides.length; update(); }
     function prev(){ current = (current - 1 + slides.length) % slides.length; update(); }
@@ -97,7 +98,9 @@ function initHorizontalGallery(){
     });
 
     // init
-    update();
+    resizeGallery();
     startTimer();
+    // keep alignment on resize
+    window.addEventListener('resize', resizeGallery);
   });
 }

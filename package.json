@@ -1,0 +1,12 @@
+{
+  "name": "bespokee-sourcing-services",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {},
+  "devDependencies": {
+    "vercel": "^35.0.0"
+  },
+  "engines": {
+    "node": "^18 || ^20"
+  }
+}
