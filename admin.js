@@ -42,8 +42,25 @@ function renderCardList(cards) {
   }
 
   const rows = cards.map(card => `
-    <div style="display:grid;grid-template-columns:96px 1fr auto;gap:16px;align-items:center;padding:14px 0;border-bottom:1px solid rgba(0,0,0,.08);">
-      <img src="${card.image_url}" alt="${card.title}" loading="lazy">
+    <div style="
+  display:grid;
+  grid-template-columns:110px 1fr auto;
+  gap:12px;
+  align-items:center;
+  padding:10px 0;
+  border-bottom:1px solid rgba(0,0,0,.08);
+">
+      <img
+  src="${card.image_url}"
+  alt="${card.title}"
+  loading="lazy"
+  style="
+    width:100px;
+    height:100px;
+    object-fit:contain;
+    border-radius:8px;
+    background:#f5f5f5;
+    padding:5px;">
       <div>
         <strong>${card.title}</strong>
         <div style="font-size:.95rem;color:#5b4969;">${card.category}</div>
