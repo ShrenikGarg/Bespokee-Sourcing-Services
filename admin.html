@@ -77,9 +77,36 @@
         </div>
 
         <div class="admin-card-list">
-          <h2>Existing card items</h2>
-          <div id="card-list-container" class="admin-loading">Loading cards…</div>
+
+  <div style="
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:16px;
+    margin:30px 0 20px;
+    flex-wrap:wrap;
+  ">
+    <h2 style="margin:0;">Existing card items</h2>
+
+        <select id="category-filter"style="min-width:260px;padding:12px 16px;border:1px solid rgba(83,63,110,.18);border-radius:12px;background:#fff;font:inherit;">
+          <option value="">All Categories</option>
+          <option value="Bath Accessories">Bath Accessories</option>
+          <option value="Decorative Accessories">Decorative Accessories</option>
+          <option value="Fashion & Women's Accessories">Fashion & Women's Accessories</option>
+          <option value="Floor Coverings">Floor Coverings</option>
+          <option value="Furniture">Furniture</option>
+          <option value="Home Furnishing Textiles">Home Furnishing Textiles</option>
+          <option value="Kids & Nursery Products">Kids & Nursery Products</option>
+          <option value="Lighting">Lighting</option>
+          <option value="Pet Products">Pet Products</option>
+        </select>
+      </div>
+
+        <div id="card-list-container" class="admin-loading">
+          Loading cards…
         </div>
+
+      </div>
       </section>
     </div>
   </div>

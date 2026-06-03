@@ -96,21 +96,45 @@ async function deleteCard(id, imagePath) {
 }
 
 async function loadCards() {
-  const container = document.getElementById('card-list-container');
+
+  const container =
+    document.getElementById('card-list-container');
+
   container.textContent = 'Loading cards…';
+
   try {
-    const result = await fetchJson('/api/cards');
+
+    const filter =
+      document.getElementById('filter-category');
+
+    let url = '/api/cards';
+
+    if (filter && filter.value) {
+      url +=
+        `?category=${encodeURIComponent(filter.value)}`;
+    }
+
+    const result = await fetchJson(url);
+
     if (result.error) {
+
       if (result.error === 'Unauthorized') {
         showLogin();
         return;
       }
-      container.innerHTML = `<p>${result.error}</p>`;
+
+      container.innerHTML =
+        `<p>${result.error}</p>`;
+
       return;
     }
+
     renderCardList(result);
+
   } catch (error) {
-    container.innerHTML = `<p>${error.message}</p>`;
+
+    container.innerHTML =
+      `<p>${error.message}</p>`;
   }
 }
 
@@ -129,6 +153,15 @@ async function initAdminPage() {
   const logoutButton = document.getElementById('logout-button');
   const loginForm = document.getElementById('login-form');
   const newCardForm = document.getElementById('new-card-form');
+  const filterCategory =
+  document.getElementById('filter-category');
+
+if (filterCategory) {
+  filterCategory.addEventListener(
+    'change',
+    loadCards
+  );
+}
 
   logoutButton.addEventListener('click', async () => {
     await postJson('/api/logout', {});
