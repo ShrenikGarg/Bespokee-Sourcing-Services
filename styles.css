@@ -574,7 +574,7 @@ main{
   display:block;
   width:100%;
   height:240px;
-  object-fit:cover;
+  object-fit:contain;
   border-radius:16px;
   background:linear-gradient(180deg,#f6f6f6,#eee);
 }

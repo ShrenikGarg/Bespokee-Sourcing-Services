@@ -47,7 +47,6 @@ function renderCardList(cards) {
       <div>
         <strong>${card.title}</strong>
         <div style="font-size:.95rem;color:#5b4969;">${card.category}</div>
-        <p style="margin:10px 0 0;color:#5b4969;">${card.description}</p>
       </div>
       <button data-id="${card.id}" data-image-path="${card.image_path}" style="background:#ff5d5d;color:#fff;">Delete</button>
     </div>`).join('');
@@ -140,7 +139,6 @@ async function initAdminPage() {
     hideAdminMessage();
 
     const title = document.getElementById('card-title').value.trim();
-    const description = document.getElementById('card-description').value.trim();
     const category = document.getElementById('card-category').value;
     const fileInput = document.getElementById('card-image');
     const file = fileInput.files[0];
@@ -154,7 +152,6 @@ async function initAdminPage() {
       const imageBase64 = await fileToBase64(file);
       const result = await postJson('/api/cards', {
         title,
-        description,
         category,
         imageName: file.name,
         imageBase64,
