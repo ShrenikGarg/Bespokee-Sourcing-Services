@@ -124,8 +124,8 @@ module.exports = async (req, res) => {
       return;
     }
 
-    const { title, description, category, imageName, imageBase64, sortOrder } = req.body || {};
-    if (!title || !description || !category || !imageName || !imageBase64) {
+    const { title, category, imageName, imageBase64, sortOrder } = req.body || {};
+    if (!title || !category || !imageName || !imageBase64) {
       res.status(400).json({ error: 'Missing required fields.' });
       return;
     }
@@ -134,7 +134,7 @@ module.exports = async (req, res) => {
       const uploaded = await uploadImage(imageName, imageBase64);
       const inserted = await insertCard({
         title,
-        description,
+        description: '',
         category,
         image_url: uploaded.url,
         image_path: uploaded.path,
