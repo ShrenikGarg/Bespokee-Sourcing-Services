@@ -134,7 +134,6 @@ module.exports = async (req, res) => {
       const uploaded = await uploadImage(imageName, imageBase64);
       const inserted = await insertCard({
         title,
-        description: '',
         category,
         image_url: uploaded.url,
         image_path: uploaded.path,
