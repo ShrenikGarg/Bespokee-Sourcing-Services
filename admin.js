@@ -105,7 +105,7 @@ async function loadCards() {
   try {
 
     const filter =
-      document.getElementById('filter-category');
+      document.getElementById('category-filter');
 
     let url = '/api/cards';
 
@@ -154,7 +154,7 @@ async function initAdminPage() {
   const loginForm = document.getElementById('login-form');
   const newCardForm = document.getElementById('new-card-form');
   const filterCategory =
-  document.getElementById('filter-category');
+  document.getElementById('category-filter');
 
 if (filterCategory) {
   filterCategory.addEventListener(
