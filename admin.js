@@ -65,58 +65,23 @@ function renderCardList(cards) {
         <strong>${card.title}</strong>
         <div style="font-size:.95rem;color:#5b4969;">${card.category}</div>
       </div>
-      <div style="display:flex;gap:8px;">
-  <button
-    class="edit-card-btn"
-    data-id="${card.id}"
-    data-title="${card.title}"
-    style="background:#4f8cff;color:#fff;">
-    Edit
-  </button>
-
-  <button
-    data-id="${card.id}"
-    data-image-path="${card.image_path}"
-    style="background:#ff5d5d;color:#fff;">
-    Delete
-  </button>
-</div>
+      <button data-id="${card.id}" data-image-path="${card.image_path}" style="background:#ff5d5d;color:#fff;">Delete</button>
     </div>`).join('');
 
   container.innerHTML = rows;
-  container.querySelectorAll('.edit-card-btn').forEach(button => {
-  button.addEventListener('click', async () => {
-
-    const id = button.dataset.id;
-    const currentTitle = button.dataset.title;
-
-    const newTitle = prompt(
-      'Edit title:',
-      currentTitle
-    );
-
-    if (!newTitle || !newTitle.trim()) return;
-
-    try {
-
-      await updateCard(id, newTitle);
-
-      showAdminMessage(
-        'Title updated successfully.',
-        'success'
-      );
-
-      loadCards();
-
-    } catch(error) {
-
-      showAdminMessage(
-        error.message || 'Update failed.',
-        'error'
-      );
-    }
+  container.querySelectorAll('button[data-id]').forEach(button => {
+    button.addEventListener('click', async () => {
+      const id = button.dataset.id;
+      const imagePath = button.dataset.imagePath;
+      try {
+        await deleteCard(id, imagePath);
+        showAdminMessage('Card deleted successfully.', 'success');
+        loadCards();
+      } catch (error) {
+        showAdminMessage(error.message || 'Delete failed.', 'error');
+      }
+    });
   });
-});
 }
 
 async function deleteCard(id, imagePath) {
@@ -232,31 +197,6 @@ async function initAdminPage() {
   } catch (error) {
     showLogin();
   }
-}
-
-async function updateCard(id, title) {
-
-  const response = await fetch('/api/cards', {
-    method: 'PUT',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      id,
-      title
-    })
-  });
-
-  const result = await response.json();
-
-  if (!result.success) {
-    throw new Error(
-      result.error || 'Unable to update card.'
-    );
-  }
-
-  return result;
 }
 
 initAdminPage();
