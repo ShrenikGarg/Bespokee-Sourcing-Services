@@ -83,7 +83,7 @@ async function deleteCardRecord(id) {
     throw new Error(`Delete failed: ${response.status} ${text}`);
   }
 
-  return response.json();
+  return true;
 }
 
 async function deleteImage(path) {
