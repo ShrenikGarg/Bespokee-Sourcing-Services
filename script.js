@@ -16,6 +16,17 @@ document.addEventListener('DOMContentLoaded',function(){
     el.style.transitionDelay = (i * 60) + 'ms';
     observer.observe(el);
   });
+
+  const scrollHeader = document.querySelector('.site-header.site-header--scroll');
+  const heroSection = document.querySelector('.hero');
+  if (scrollHeader && heroSection) {
+    const heroObserver = new IntersectionObserver(([entry]) => {
+      scrollHeader.classList.toggle('site-header--visible', !entry.isIntersecting);
+    }, { threshold: 0.05 });
+
+    heroObserver.observe(heroSection);
+  }
+
   // initialize horizontal gallery auto-scroll
   if (typeof initHorizontalGallery === 'function') initHorizontalGallery();
 });
