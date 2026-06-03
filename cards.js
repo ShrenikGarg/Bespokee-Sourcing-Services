@@ -28,7 +28,6 @@ function renderCardsPage() {
           <img src="${escapeHtml(item.image_url)}" alt="${escapeHtml(item.title)}" loading="lazy">
           <div class="product-desc">
             <h4>${escapeHtml(item.title)}</h4>
-            <p>${escapeHtml(item.description)}</p>
           </div>
         </div>
       `).join('');

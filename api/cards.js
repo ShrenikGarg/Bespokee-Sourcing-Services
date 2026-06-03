@@ -103,7 +103,7 @@ module.exports = async (req, res) => {
   if (req.method === 'GET') {
     const category = req.query.category;
     const filter = category ? `?category=eq.${encodeURIComponent(category)}` : '?';
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}${filter}&select=id,category,title,description,image_url,image_path,sort_order`, {
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}${filter}&select=id,category,title,image_url,image_path,sort_order`, {
       headers: supabaseHeaders(),
     });
 
