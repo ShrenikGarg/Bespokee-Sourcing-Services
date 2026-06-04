@@ -12,7 +12,7 @@
     .admin-panel h1, .admin-panel h2 { margin:0 0 18px; }
     .admin-form { margin-top:24px; }
     .admin-form label { display:block; margin-bottom:8px; color:#423154; font-weight:700; }
-    .admin-form input, .admin-form textarea, .admin-form select { width:100%; padding:14px 16px; border:1px solid rgba(83,63,110,.18); border-radius:12px; font:inherit; margin-bottom:18px; }
+    .admin-form input, .admin-form textarea, .admin-form select { width:100%; padding:14px 16px; border:1px solid rgba(83,63,110,.18); border-radius:12px; font:inherit; margin-bottom:18px; box-sizing:border-box; }
     .admin-form button, .admin-actions button { appearance:none; cursor:pointer; border:none; border-radius:12px; padding:14px 20px; font:inherit; background:#5B2C83; color:#fff; }
     .admin-actions button { background:#ece3f1; color:#4a2a65; }
     .admin-actions { display:flex; flex-wrap:wrap; gap:12px; margin-bottom:24px; }
@@ -24,6 +24,45 @@
     .admin-table img { display:block; max-width:80px; border-radius:10px; }
     .admin-loading { font-weight:700; color:#5B2C83; }
     .hero-ctas a { min-width:160px; }
+
+    /* Image preview */
+    #image-preview-wrap { display:none; margin-top:-10px; margin-bottom:18px; }
+    #image-preview { width:100px; height:100px; object-fit:contain; border-radius:10px; background:#f5f5f5; padding:5px; border:1px solid rgba(83,63,110,.18); }
+
+    /* Card row buttons */
+    button.edit-btn  { appearance:none; cursor:pointer; border:none; border-radius:10px; padding:9px 16px; font:inherit; font-size:.9rem; background:#e8f0fe; color:#1a56db; }
+    button.delete-btn { appearance:none; cursor:pointer; border:none; border-radius:10px; padding:9px 16px; font:inherit; font-size:.9rem; background:#ff5d5d; color:#fff; }
+    button.confirm-delete-btn { appearance:none; cursor:pointer; border:none; border-radius:10px; padding:9px 16px; font:inherit; font-size:.9rem; background:#c0392b; color:#fff; }
+    button.cancel-delete-btn  { appearance:none; cursor:pointer; border:none; border-radius:10px; padding:9px 16px; font:inherit; font-size:.9rem; background:#ece3f1; color:#4a2a65; }
+
+    /* Pagination */
+    .pagination { display:flex; align-items:center; justify-content:center; gap:10px; margin-top:24px; flex-wrap:wrap; }
+    .pagination button { appearance:none; cursor:pointer; border:none; border-radius:10px; padding:9px 18px; font:inherit; font-size:.9rem; background:#ece3f1; color:#4a2a65; }
+    .pagination button.active { background:#5B2C83; color:#fff; }
+    .pagination button:disabled { opacity:.4; cursor:default; }
+    .pagination-info { font-size:.9rem; color:#5b4969; }
+
+    /* Search bar */
+    #title-search { width:100%; padding:12px 16px; border:1px solid rgba(83,63,110,.18); border-radius:12px; font:inherit; box-sizing:border-box; }
+
+    /* Edit modal */
+    .edit-modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:1000; align-items:center; justify-content:center; }
+    .edit-modal-overlay.open { display:flex; }
+    .edit-modal { background:#fff; border-radius:20px; padding:32px; width:100%; max-width:460px; box-shadow:0 24px 64px rgba(43,20,78,.18); margin:16px; box-sizing:border-box; }
+    .edit-modal h3 { margin:0 0 20px; color:#2b144e; }
+    .edit-modal label { display:block; margin-bottom:6px; font-weight:700; color:#423154; }
+    .edit-modal input, .edit-modal select { width:100%; padding:12px 14px; border:1px solid rgba(83,63,110,.18); border-radius:12px; font:inherit; margin-bottom:16px; box-sizing:border-box; }
+    .edit-modal-actions { display:flex; gap:12px; justify-content:flex-end; margin-top:4px; }
+    .edit-modal-actions button { padding:12px 22px; border:none; border-radius:12px; font:inherit; cursor:pointer; }
+    .btn-save   { background:#5B2C83; color:#fff; }
+    .btn-cancel { background:#ece3f1; color:#4a2a65; }
+
+    /* Edit image preview */
+    #edit-image-preview-wrap { display:none; margin-top:-10px; margin-bottom:16px; }
+    #edit-image-preview { width:90px; height:90px; object-fit:contain; border-radius:10px; background:#f5f5f5; padding:5px; border:1px solid rgba(83,63,110,.18); }
+
+    /* Sort order hint */
+    .sort-hint { font-size:.82rem; color:#8a6fa8; margin-top:-14px; margin-bottom:14px; }
   </style>
 </head>
 <body>
@@ -57,11 +96,11 @@
             <select id="card-category" name="category" required>
               <option value="Bath Accessories">Bath Accessories</option>
               <option value="Decorative Accessories">Decorative Accessories</option>
-              <option value="Fashion & Women's Accessories">Fashion & Women's Accessories</option>
+              <option value="Fashion & Women's Accessories">Fashion &amp; Women's Accessories</option>
               <option value="Floor Coverings">Floor Coverings</option>
               <option value="Furniture">Furniture</option>
               <option value="Home Furnishing Textiles">Home Furnishing Textiles</option>
-              <option value="Kids & Nursery Products">Kids & Nursery Products</option>
+              <option value="Kids & Nursery Products">Kids &amp; Nursery Products</option>
               <option value="Lighting">Lighting</option>
               <option value="Pet Products">Pet Products</option>
             </select>
@@ -69,45 +108,78 @@
             <label for="card-title">Title</label>
             <input id="card-title" name="title" type="text" required>
 
+            <label for="card-sort-order">Sort order</label>
+            <input id="card-sort-order" name="sort_order" type="number" value="0" min="0">
+            <p class="sort-hint">Lower numbers appear first on the public page. Use 0 if unsure.</p>
+
             <label for="card-image">Image</label>
             <input id="card-image" name="image" type="file" accept="image/*" required>
-            
+
+            <div id="image-preview-wrap">
+              <img id="image-preview" src="" alt="Preview">
+            </div>
+
             <button type="submit">Upload and save</button>
           </form>
         </div>
 
         <div class="admin-card-list">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;margin:30px 0 16px;flex-wrap:wrap;">
+            <h2 style="margin:0;">Existing card items</h2>
+            <select id="category-filter" style="min-width:260px;padding:12px 16px;border:1px solid rgba(83,63,110,.18);border-radius:12px;background:#fff;font:inherit;">
+              <option value="">All Categories</option>
+              <option value="Bath Accessories">Bath Accessories</option>
+              <option value="Decorative Accessories">Decorative Accessories</option>
+              <option value="Fashion & Women's Accessories">Fashion &amp; Women's Accessories</option>
+              <option value="Floor Coverings">Floor Coverings</option>
+              <option value="Furniture">Furniture</option>
+              <option value="Home Furnishing Textiles">Home Furnishing Textiles</option>
+              <option value="Kids & Nursery Products">Kids &amp; Nursery Products</option>
+              <option value="Lighting">Lighting</option>
+              <option value="Pet Products">Pet Products</option>
+            </select>
+          </div>
 
-  <div style="
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:16px;
-    margin:30px 0 20px;
-    flex-wrap:wrap;
-  ">
-    <h2 style="margin:0;">Existing card items</h2>
+          <div style="margin-bottom:16px;">
+            <input id="title-search" type="text" placeholder="Search by title…">
+          </div>
 
-        <select id="category-filter"style="min-width:260px;padding:12px 16px;border:1px solid rgba(83,63,110,.18);border-radius:12px;background:#fff;font:inherit;">
-          <option value="">All Categories</option>
-          <option value="Bath Accessories">Bath Accessories</option>
-          <option value="Decorative Accessories">Decorative Accessories</option>
-          <option value="Fashion & Women's Accessories">Fashion & Women's Accessories</option>
-          <option value="Floor Coverings">Floor Coverings</option>
-          <option value="Furniture">Furniture</option>
-          <option value="Home Furnishing Textiles">Home Furnishing Textiles</option>
-          <option value="Kids & Nursery Products">Kids & Nursery Products</option>
-          <option value="Lighting">Lighting</option>
-          <option value="Pet Products">Pet Products</option>
-        </select>
-      </div>
-
-        <div id="card-list-container" class="admin-loading">
-          Loading cards…
+          <div id="card-list-container" class="admin-loading">Loading cards…</div>
+          <div id="pagination-container" class="pagination"></div>
         </div>
-
-      </div>
       </section>
+    </div>
+  </div>
+
+  <!-- Edit modal -->
+  <div id="edit-modal" class="edit-modal-overlay" role="dialog" aria-modal="true">
+    <div class="edit-modal">
+      <h3>Edit card</h3>
+      <label for="edit-title">Title</label>
+      <input id="edit-title" type="text">
+      <label for="edit-category">Category</label>
+      <select id="edit-category">
+        <option value="Bath Accessories">Bath Accessories</option>
+        <option value="Decorative Accessories">Decorative Accessories</option>
+        <option value="Fashion & Women's Accessories">Fashion &amp; Women's Accessories</option>
+        <option value="Floor Coverings">Floor Coverings</option>
+        <option value="Furniture">Furniture</option>
+        <option value="Home Furnishing Textiles">Home Furnishing Textiles</option>
+        <option value="Kids & Nursery Products">Kids &amp; Nursery Products</option>
+        <option value="Lighting">Lighting</option>
+        <option value="Pet Products">Pet Products</option>
+      </select>
+      <label for="edit-sort-order">Sort order</label>
+      <input id="edit-sort-order" type="number" min="0">
+      <label for="edit-image">Replace image <span style="font-weight:400;color:#8a6fa8;">(optional)</span></label>
+      <input id="edit-image" type="file" accept="image/*">
+      <div id="edit-image-preview-wrap">
+        <img id="edit-image-preview" src="" alt="New image preview">
+      </div>
+      <div class="edit-modal-actions">
+        <button id="edit-cancel-btn" class="btn-cancel">Cancel</button>
+        <button id="edit-save-btn" class="btn-save">Save changes</button>
+      </div>
     </div>
   </div>
 
