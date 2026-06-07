@@ -516,12 +516,25 @@ main{
 }
 
 .header-brand span{
+  display:flex;
+  flex-direction:column;
+  gap:1px;
+}
+
+.header-brand-name{
   font-weight:700;
   font-size:1rem;
   letter-spacing:0.02em;
-  /* Prevent brand name overflowing on narrow screens */
-  overflow:hidden;
-  text-overflow:ellipsis;
+  color:#2B163E;
+  line-height:1.2;
+  white-space:nowrap;
+}
+
+.header-brand-tagline{
+  font-size:0.72rem;
+  font-weight:500;
+  letter-spacing:0.03em;
+  color:#7a5c9a;
   white-space:nowrap;
 }
 
@@ -538,7 +551,7 @@ main{
   width:48px;
 }
 
-.site-header--scroll.site-header--visible .header-brand span{
+.site-header--scroll.site-header--visible .header-brand-name{
   font-size:0.95rem;
 }
 
@@ -1394,6 +1407,12 @@ textarea:focus{
   .header-brand span{
     font-size:0.85rem;
   }
+  .header-brand-name{
+    font-size:0.88rem;
+  }
+  .header-brand-tagline{
+    font-size:0.68rem;
+  }
 
   /* Shrink nav link text slightly on tablet */
   .header-nav-link{
@@ -1412,7 +1431,21 @@ textarea:focus{
 
 @media (max-width:700px){
   .containers{
-    padding:0 16px;
+    padding:0 12px;
+  }
+
+  .site-header .containers{
+    gap:8px;
+  }
+
+  .header-brand{
+    gap:6px;
+    flex-shrink:1;
+    min-width:0;
+  }
+
+  .header-nav{
+    flex-shrink:0;
   }
 
   .hero{
@@ -1484,35 +1517,34 @@ textarea:focus{
   /* Header: show brand name on mobile with smaller font */
   .site-header .containers span,
   .header-brand span{
-    display:block;
-    font-size:0.72rem;
-    white-space:normal;
-    line-height:1.3;
-    max-width:200px;
-    color: #2B163E;
+    display:flex;
+    flex-direction:column;
+    gap:1px;
+  }
+  .header-brand-name{
+    font-size:0.55rem;
+    white-space:nowrap;
+    color:#2B163E;
+  }
+  .header-brand-tagline{
+    font-size:0.52rem;
+    white-space:nowrap;
+    color:#7a5c9a;
   }
 
   .brand-logo{
-    width:36px !important;
-    height:36px !important;
+    width:28px !important;
+    height:28px !important;
   }
 
-  /* Nav on mobile: show both but very compact */
-  .header-nav{
-    gap:4px;
-  }
-  .header-nav-link{
-    font-size:0.72rem;
-    padding:6px 10px;
-  }
+  /* Nav on mobile: hide About Us, keep Contact Us only */
   .header-nav-link:not(.header-nav-cta){
-    display:block;
-    background:rgba(91,44,131,0.06);
-    color:#5B2C83;
+    display:none;
   }
   .header-nav-cta{
-    font-size:0.72rem;
+    font-size:0.65rem;
     padding:6px 10px;
+    white-space:nowrap;
   }
 
   /* Back-to-home button: full width on mobile */
