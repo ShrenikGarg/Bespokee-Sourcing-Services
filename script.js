@@ -1,16 +1,25 @@
-document.addEventListener('DOMContentLoaded',function(){
-  document.getElementById('year').textContent=new Date().getFullYear();
+document.addEventListener('DOMContentLoaded', function () {
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Keep --header-h CSS variable in sync with actual header height
-  function updateHeaderHeight(){
+  // ── Page load progress bar ──────────────────────────────────────────────
+  const bar = document.createElement('div');
+  bar.className = 'page-progress';
+  document.body.prepend(bar);
+  bar.addEventListener('animationend', () => bar.remove(), { once: true });
+
+  // ── Header height CSS variable ──────────────────────────────────────────
+  function updateHeaderHeight() {
     const header = document.querySelector('.site-header');
-    if(header){
-      document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
-    }
+    if (header) document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
   }
   updateHeaderHeight();
   window.addEventListener('resize', updateHeaderHeight);
-  // scroll reveal observer
+
+  // ── Logo shimmer on load ────────────────────────────────────────────────
+  const logo = document.querySelector('.brand-logo');
+  if (logo) logo.classList.add('shimmer-once');
+
+  // ── Scroll reveal observer ──────────────────────────────────────────────
   const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -18,18 +27,39 @@ document.addEventListener('DOMContentLoaded',function(){
         obs.unobserve(entry.target);
       }
     });
-  },{threshold:0.12});
+  }, { threshold: 0.1 });
 
-  const revealTargets = Array.from(document.querySelectorAll('.card, .step, .testimonial, .hero-content, .section-title, .section-sub'));
-  revealTargets.forEach((el, i) => {
+  // Cards: stagger within each grid so they cascade in one by one
+  document.querySelectorAll('.cards').forEach(grid => {
+    const cards = Array.from(grid.querySelectorAll('.card'));
+    cards.forEach((card, i) => {
+      card.classList.add('reveal');
+      card.style.transitionDelay = (i * 80) + 'ms';
+      observer.observe(card);
+    });
+  });
+
+  // Section titles and labels fade up
+  document.querySelectorAll('.section-title, .section-sub').forEach((el, i) => {
     el.classList.add('reveal');
-    el.style.transitionDelay = (i * 60) + 'ms';
+    el.style.transitionDelay = (i * 50) + 'ms';
     observer.observe(el);
   });
 
-  // header is always fixed — no scroll observer needed
+  // Section labels slide in from left
+  document.querySelectorAll('.section-label').forEach(el => {
+    el.classList.add('reveal');
+    observer.observe(el);
+  });
 
-  // initialize horizontal gallery auto-scroll
+  // Hero content entrance (fires immediately since hero is above the fold)
+  const heroContent = document.querySelector('.hero-content');
+  if (heroContent) {
+    // Small delay so it feels like a deliberate entrance after the carousel
+    setTimeout(() => heroContent.classList.add('show'), 200);
+  }
+
+  // ── Gallery ─────────────────────────────────────────────────────────────
   if (typeof initHorizontalGallery === 'function') initHorizontalGallery();
 });
 

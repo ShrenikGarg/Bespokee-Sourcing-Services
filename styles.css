@@ -790,40 +790,159 @@ textarea{
    REVEAL ANIMATIONS
 ========================= */
 
-.reveal{
-  opacity:0;
+/* =========================
+   KEYFRAMES
+========================= */
 
-  transform:translateY(14px);
-
-  transition:
-    opacity .6s cubic-bezier(.2,.9,.2,1),
-    transform .6s cubic-bezier(.2,.9,.2,1);
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(22px); }
+  to   { opacity:1; transform:translateY(0); }
 }
 
-.reveal.show{
-  opacity:1;
-  transform:none;
+@keyframes fadeIn {
+  from { opacity:0; }
+  to   { opacity:1; }
+}
+
+@keyframes slideDown {
+  from { opacity:0; transform:translateY(-100%); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity:0; transform:scale(0.94); }
+  to   { opacity:1; transform:scale(1); }
+}
+
+@keyframes progressBar {
+  from { width:0; }
+  to   { width:100%; }
+}
+
+@keyframes shimmer {
+  0%   { background-position:200% center; }
+  100% { background-position:-200% center; }
+}
+
+/* =========================
+   PAGE LOAD PROGRESS BAR
+========================= */
+
+.page-progress {
+  position:fixed;
+  top:0;
+  left:0;
+  height:3px;
+  width:0;
+  z-index:9999;
+  background: linear-gradient(90deg, var(--purple), #c71196, var(--purple));
+  background-size:200% auto;
+  animation:
+    progressBar .7s cubic-bezier(.4,0,.2,1) forwards,
+    shimmer 1.4s linear infinite;
+  pointer-events:none;
+}
+
+/* =========================
+   HEADER ENTRANCE
+========================= */
+
+.site-header {
+  animation: slideDown .5s cubic-bezier(.2,.9,.2,1) both;
+}
+
+/* =========================
+   CAROUSEL ENTRANCE
+========================= */
+
+#gallery.section {
+  animation: fadeIn .8s ease .1s both;
 }
 
 /* =========================
    HERO ENTRANCE ANIMATIONS
    Stagger child elements inside .hero-content when it becomes visible
 ========================= */
-.hero-content .logo-container,
-.hero-content .hero-brand-name,
 .hero-content h1,
 .hero-content .lead,
 .hero-content .hero-ctas {
   opacity: 0;
-  transform: translateY(12px);
-  transition: opacity .6s cubic-bezier(.2,.9,.2,1), transform .6s cubic-bezier(.2,.9,.2,1);
+  transform: translateY(16px);
+  transition: opacity .7s cubic-bezier(.2,.9,.2,1), transform .7s cubic-bezier(.2,.9,.2,1);
 }
 
-.hero-content.show .logo-container{ transition-delay: 80ms; opacity:1; transform:none; }
-.hero-content.show .hero-brand-name{ transition-delay: 140ms; opacity:1; transform:none; }
-.hero-content.show h1{ transition-delay: 200ms; opacity:1; transform:none; }
-.hero-content.show .lead{ transition-delay: 260ms; opacity:1; transform:none; }
-.hero-content.show .hero-ctas{ transition-delay: 320ms; opacity:1; transform:none; }
+.hero-content.show h1   { transition-delay: 80ms;  opacity:1; transform:none; }
+.hero-content.show .lead{ transition-delay: 180ms; opacity:1; transform:none; }
+.hero-content.show .hero-ctas { transition-delay: 280ms; opacity:1; transform:none; }
+
+/* =========================
+   SCROLL REVEAL
+========================= */
+
+.reveal {
+  opacity:0;
+  transform:translateY(20px);
+  transition:
+    opacity .65s cubic-bezier(.2,.9,.2,1),
+    transform .65s cubic-bezier(.2,.9,.2,1);
+}
+
+.reveal.show {
+  opacity:1;
+  transform:none;
+}
+
+/* Cards get a slight scale-in on top of the fade-up */
+.card.reveal {
+  transform: translateY(20px) scale(0.97);
+  transition:
+    opacity .6s cubic-bezier(.2,.9,.2,1),
+    transform .6s cubic-bezier(.2,.9,.2,1);
+}
+
+.card.reveal.show {
+  opacity:1;
+  transform: translateY(0) scale(1);
+}
+
+/* Section labels slide in from left */
+.section-label.reveal {
+  transform: translateX(-14px);
+  transition:
+    opacity .55s cubic-bezier(.2,.9,.2,1),
+    transform .55s cubic-bezier(.2,.9,.2,1);
+}
+
+.section-label.reveal.show {
+  opacity:1;
+  transform:none;
+}
+
+/* =========================
+   LOGO SHIMMER (on load)
+========================= */
+
+.brand-logo.shimmer-once {
+  animation: shimmerLogo .9s ease .3s both;
+}
+
+@keyframes shimmerLogo {
+  0%   { opacity:.4; filter:brightness(1.3); }
+  100% { opacity:1;  filter:brightness(1); }
+}
+
+/* =========================
+   ACCESSIBILITY — respect reduced motion
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  .page-progress { display:none; }
+}
 
 
 /* =========================
