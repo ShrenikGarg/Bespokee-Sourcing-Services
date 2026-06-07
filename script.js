@@ -12,7 +12,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const header = document.querySelector('.site-header');
     if (header) document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
   }
-  updateHeaderHeight();
+  // Measure after layout is fully painted to avoid incorrect early measurements
+  requestAnimationFrame(() => { requestAnimationFrame(updateHeaderHeight); });
   window.addEventListener('resize', updateHeaderHeight);
 
   // ── Logo shimmer on load ────────────────────────────────────────────────

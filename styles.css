@@ -249,7 +249,7 @@ main{
   padding:0;
   height:calc(100vh - var(--header-h, 92px));
   display:flex;
-  align-items:center;
+  align-items:stretch;
   background:rgba(248,245,241,0.96);
 }
 
@@ -468,7 +468,43 @@ main{
 .site-header .containers{
   display:flex;
   align-items:center;
-  justify-content:flex-start;
+  justify-content:space-between;
+  gap:16px;
+}
+
+.header-nav{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-shrink:0;
+}
+
+.header-nav-link{
+  text-decoration:none;
+  font-size:0.88rem;
+  font-weight:600;
+  color:#423154;
+  padding:8px 16px;
+  border-radius:10px;
+  letter-spacing:0.02em;
+  transition:background .18s ease, color .18s ease;
+}
+
+.header-nav-link:hover{
+  background:rgba(91,44,131,0.08);
+  color:#5B2C83;
+}
+
+/* Contact Us — filled pill button */
+.header-nav-cta{
+  background:#5B2C83;
+  color:#fff !important;
+  padding:8px 20px;
+}
+
+.header-nav-cta:hover{
+  background:#4a2270;
+  color:#fff !important;
 }
 
 .header-brand{
@@ -856,7 +892,7 @@ textarea{
 ========================= */
 
 #gallery.section {
-  animation: fadeIn .8s ease .1s both;
+  animation: fadeIn .8s ease .1s forwards;
 }
 
 /* =========================
@@ -988,7 +1024,7 @@ textarea:focus{
 .hg-slide{
   flex:0 0 100%;
   display:flex;
-  align-items:center;
+  align-items:stretch;
   justify-content:center;
   height:100%;
 }
@@ -996,13 +1032,29 @@ textarea:focus{
 .hg-slide img{
   display:block;
   width:auto;
-  height:auto;
+  height:100%;
   max-width:100%;
-  max-height:100%;
   object-fit:contain;
   margin:0 auto;
   border-radius:0 !important;
   box-shadow:none;
+}
+
+/* On mobile portrait screens, landscape images would leave huge blank gaps
+   with object-fit:contain — switch to cover so they fill the container */
+@media (max-width:700px){
+  #gallery.section{
+    height:56vw; /* natural landscape aspect ratio height for mobile width */
+    min-height:220px;
+    max-height:60vh;
+  }
+
+  .hg-slide img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+  }
 }
 
 
@@ -1222,7 +1274,6 @@ textarea:focus{
   color:#6a5480;
   border-top:1px solid rgba(255,255,255,0.08);
   padding-top:20px;
-  text-align:center
 }
 
 @media (max-width:700px){
@@ -1344,6 +1395,15 @@ textarea:focus{
     font-size:0.85rem;
   }
 
+  /* Shrink nav link text slightly on tablet */
+  .header-nav-link{
+    font-size:0.82rem;
+    padding:7px 13px;
+  }
+  .header-nav-cta{
+    padding:7px 15px;
+  }
+
   /* Section padding tighter on tablet */
   .section{
     padding:48px 0;
@@ -1435,6 +1495,24 @@ textarea:focus{
   .brand-logo{
     width:36px !important;
     height:36px !important;
+  }
+
+  /* Nav on mobile: show both but very compact */
+  .header-nav{
+    gap:4px;
+  }
+  .header-nav-link{
+    font-size:0.72rem;
+    padding:6px 10px;
+  }
+  .header-nav-link:not(.header-nav-cta){
+    display:block;
+    background:rgba(91,44,131,0.06);
+    color:#5B2C83;
+  }
+  .header-nav-cta{
+    font-size:0.72rem;
+    padding:6px 10px;
   }
 
   /* Back-to-home button: full width on mobile */
