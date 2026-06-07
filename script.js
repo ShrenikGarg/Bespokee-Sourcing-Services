@@ -1,5 +1,15 @@
 document.addEventListener('DOMContentLoaded',function(){
   document.getElementById('year').textContent=new Date().getFullYear();
+
+  // Keep --header-h CSS variable in sync with actual header height
+  function updateHeaderHeight(){
+    const header = document.querySelector('.site-header');
+    if(header){
+      document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
+    }
+  }
+  updateHeaderHeight();
+  window.addEventListener('resize', updateHeaderHeight);
   // scroll reveal observer
   const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
@@ -17,15 +27,7 @@ document.addEventListener('DOMContentLoaded',function(){
     observer.observe(el);
   });
 
-  const scrollHeader = document.querySelector('.site-header.site-header--scroll');
-  const heroSection = document.querySelector('.hero');
-  if (scrollHeader && heroSection) {
-    const heroObserver = new IntersectionObserver(([entry]) => {
-      scrollHeader.classList.toggle('site-header--visible', !entry.isIntersecting);
-    }, { threshold: 0.05 });
-
-    heroObserver.observe(heroSection);
-  }
+  // header is always fixed — no scroll observer needed
 
   // initialize horizontal gallery auto-scroll
   if (typeof initHorizontalGallery === 'function') initHorizontalGallery();
@@ -47,8 +49,7 @@ function submitForm(e){
 
 function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'})}
 
-// Horizontal gallery: continuous auto-scroll with hover-to-pause
-// Carousel: one slide visible, auto-advance every 5s, with Prev/Next
+// Carousel: one slide visible, auto-advance every 3s
 function initHorizontalGallery(){
   const galleries = document.querySelectorAll('.horizontal-gallery');
   galleries.forEach(gallery => {
@@ -91,7 +92,6 @@ function initHorizontalGallery(){
     function startTimer(){ stopTimer(); timer = setInterval(()=>{ if(!paused) next(); }, intervalTime); }
     function stopTimer(){ if(timer){ clearInterval(timer); timer = null; } }
 
-    // pause while hovering or focusing
     gallery.addEventListener('mouseenter', ()=> paused = true);
     gallery.addEventListener('mouseleave', ()=> paused = false);
     gallery.addEventListener('focusin', ()=> paused = true);
@@ -102,15 +102,16 @@ function initHorizontalGallery(){
     if (prevBtn) prevBtn.addEventListener('click', ()=>{ paused = true; prev(); setTimeout(()=> paused = false, intervalTime - 200); startTimer(); });
     if (nextBtn) nextBtn.addEventListener('click', ()=>{ paused = true; next(); setTimeout(()=> paused = false, intervalTime - 200); startTimer(); });
 
-    // keyboard support
     gallery.addEventListener('keydown', (e)=>{
       if (e.key === 'ArrowRight') { e.preventDefault(); paused = true; next(); setTimeout(()=> paused = false, intervalTime - 200); }
       if (e.key === 'ArrowLeft') { e.preventDefault(); paused = true; prev(); setTimeout(()=> paused = false, intervalTime - 200); }
     });
 
-    // init
-    resizeGallery();
-    startTimer();
+    // init — defer so layout is complete before measuring slideWidth
+    requestAnimationFrame(() => {
+      resizeGallery();
+      startTimer();
+    });
     // keep alignment on resize
     window.addEventListener('resize', resizeGallery);
   });

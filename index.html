@@ -6,6 +6,9 @@
   <title>Bespokee Sourcing Services</title>
   <link rel="stylesheet" href="styles.css">
   <meta name="description" content="Bespokee Sourcing Services — sourcing made simple." />
+  <style>
+    :root { --header-h: 92px; }
+  </style>
 </head>
 <body>
 
@@ -19,28 +22,8 @@
   </header>
 
   <main>
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-content">
-          <div class="hero-brand">
-            <div class="logo-container">
-              <img class="site-logo" src="images/BSS logo.png" alt="Bespokee logo" width="120" height="120">
-            </div>
-           <p class="hero-brand-name">BESPOKEE SOURCING SERVIICES</p>
-          </div>
-          <p class="hero-tag">Partnerships Built on Trust</p>
-          <h1>Strategic Sourcing & Merchandising Solutions Across India</h1>
-          <p class="lead">Bespokee Sourcing Serviices is an India-based strategic sourcing and merchandising partner supporting global retailers, importers, and designer brands across the USA and Europe.</p>
-          <div class="hero-ctas">
-            <a class="btn-primary" href="#services">Explore Services</a>
-            <!--<a class="btn-ghost" href="#contact">Contact Us</a>-->
-          </div>
-        </div>       
-      </div>
-    </section>
 
-      <section id="gallery" class="section">
-      <div class="container">
+      <section id="gallery" class="section carousel-section">
         <div class="horizontal-gallery" aria-label="Image gallery" tabindex="0">
           <div class="hg-viewport">
             <div class="hg-track">
@@ -51,6 +34,14 @@
             </div>
           </div>
         </div>
+    </section>
+
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <h1>Strategic Sourcing & Merchandising Solutions Across India</h1>
+          <p class="lead">Bespokee Sourcing Serviices is an India-based strategic sourcing and merchandising partner supporting global retailers, importers, and designer brands across the USA and Europe.</p>
+        </div>       
       </div>
     </section>
 
@@ -167,7 +158,7 @@
           </a>
           <a class="card-link" href="fashion-womens-accessories.html" aria-label="Fashion and Women's Accessories">
             <article class="card">
-              <p>Fashion &amp; Women’s Accessories</p>
+              <p>Fashion &amp; Women's Accessories</p>
             </article>
           </a>
           <a class="card-link" href="pet-products.html" aria-label="Pet Products">
@@ -243,10 +234,20 @@
 
   <footer class="site-footer">
     <div class="footer-inner">
-      <div>© Bespokee Sourcing Serviices | Partnerships Built on Trust
-        <br>
-        <span id="year"></span></br>
+      <div class="footer-brand">
+        <img src="images/BSS logo.png" alt="Bespokee logo" width="44" height="44">
+        <div>
+          <p class="footer-name">Bespokee Sourcing Serviices</p>
+          <p class="footer-tagline">Partnerships Built on Trust</p>
+        </div>
       </div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#categories">Categories</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <p class="footer-copy">© <span id="year"></span> Bespokee Sourcing Serviices. All rights reserved.</p>
     </div>
   </footer>
 
