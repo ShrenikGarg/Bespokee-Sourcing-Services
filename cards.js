@@ -8,7 +8,7 @@ function escapeHtml(text) {
 }
 
 function renderCardsPage() {
-  const gallery      = document.querySelector('.product-gallery');
+  const gallery = document.querySelector('.product-gallery');
   const labelElement = document.querySelector('.section-label');
   if (!gallery || !labelElement) return;
 
@@ -23,16 +23,9 @@ function renderCardsPage() {
         return;
       }
 
-      // First 6 cards load eagerly (above the fold), rest load lazily
-      gallery.innerHTML = data.map((item, i) => `
+      gallery.innerHTML = data.map(item => `
         <div class="product-card">
-          <img
-            src="${escapeHtml(item.image_url)}"
-            alt="${escapeHtml(item.title)}"
-            width="600"
-            height="600"
-            loading="${i < 6 ? 'eager' : 'lazy'}"
-            decoding="async">
+          <img src="${escapeHtml(item.image_url)}" alt="${escapeHtml(item.title)}" loading="lazy">
           <div class="product-desc">
             <h4>${escapeHtml(item.title)}</h4>
           </div>

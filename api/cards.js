@@ -1,5 +1,4 @@
 const { isAdminRequest } = require('./_auth');
-const sharp = require('sharp');
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
@@ -33,24 +32,17 @@ function imageUrlForPath(path) {
 
 async function uploadImage(imageName, base64) {
   const cleanedName = sanitizeFileName(imageName);
-  // Strip extension and always store as .webp
-  const baseName   = cleanedName.replace(/\.[^.]+$/, '');
-  const destPath   = `${Date.now()}-${baseName}.webp`;
-  const payload    = base64.replace(/^data:.*;base64,/, '');
-  const inputBuf   = Buffer.from(payload, 'base64');
-
-  // Convert to WebP at 82% quality, max 1200px wide — keeps file sizes small
-  const webpBuf = await sharp(inputBuf)
-    .resize({ width: 1200, withoutEnlargement: true })
-    .webp({ quality: 82 })
-    .toBuffer();
+  const destPath    = `${Date.now()}-${cleanedName}`;
+  const mimeType    = mimeTypeForFilename(cleanedName);
+  const payload     = base64.replace(/^data:.*;base64,/, '');
+  const buffer      = Buffer.from(payload, 'base64');
 
   const response = await fetch(
     `${SUPABASE_URL}/storage/v1/object/${BUCKET}/${encodeURIComponent(destPath)}`,
     {
       method: 'PUT',
-      headers: { ...supabaseHeaders('image/webp'), 'x-upsert': 'true' },
-      body: webpBuf,
+      headers: { ...supabaseHeaders(mimeType), 'x-upsert': 'true' },
+      body: buffer,
     }
   );
 
@@ -136,7 +128,6 @@ module.exports = async (req, res) => {
       return;
     }
 
-    res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=60');
     res.status(200).json(await response.json());
     return;
   }
