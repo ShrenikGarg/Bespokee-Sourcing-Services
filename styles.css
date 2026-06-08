@@ -920,9 +920,18 @@ textarea{
   transition: opacity .7s cubic-bezier(.2,.9,.2,1), transform .7s cubic-bezier(.2,.9,.2,1);
 }
 
-.hero-content.show h1   { transition-delay: 80ms;  opacity:1; transform:none; }
-.hero-content.show .lead{ transition-delay: 180ms; opacity:1; transform:none; }
-.hero-content.show .hero-ctas { transition-delay: 280ms; opacity:1; transform:none; }
+/* These fire when script.js adds .show to .hero-content after 200ms */
+.hero-content.show h1        { transition-delay: 80ms;  opacity:1; transform:none; }
+.hero-content.show .lead     { transition-delay: 180ms; opacity:1; transform:none; }
+.hero-content.show .hero-ctas{ transition-delay: 280ms; opacity:1; transform:none; }
+
+/* Safety: if h1/lead also carry .reveal, still reveal them when parent gets .show
+   so they never stay stuck at opacity:0 */
+.hero-content.show h1.reveal,
+.hero-content.show .lead.reveal {
+  opacity:1;
+  transform:none;
+}
 
 /* =========================
    SCROLL REVEAL
@@ -1306,6 +1315,165 @@ textarea:focus{
   }
 }
 
+
+
+/* =========================
+   FOUNDER'S NOTE SECTION
+========================= */
+
+#founder {
+  background: #f8f5f1;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Soft decorative tint behind the card */
+#founder::before {
+  content: "";
+  position: absolute;
+  top: -120px; right: -120px;
+  width: 480px; height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(91,44,131,0.07), transparent 65%);
+  pointer-events: none;
+}
+
+/* Founder card — uses CSS animation so it ALWAYS plays, no JS needed */
+.founder-card {
+  max-width: 820px;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 24px;
+  border: 1px solid rgba(91,44,131,0.12);
+  box-shadow:
+    0 18px 48px rgba(91,44,131,0.09),
+    0 2px 10px rgba(255,255,255,0.4) inset;
+  padding: 52px 56px;
+  position: relative;
+  /* CSS-only entrance — fires as soon as element renders */
+  animation: founderReveal .8s cubic-bezier(.2,.9,.2,1) .15s both;
+  transition: transform .28s ease, box-shadow .28s ease;
+}
+
+@keyframes founderReveal {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.founder-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 28px 60px rgba(91,44,131,0.13),
+    0 2px 10px rgba(255,255,255,0.4) inset;
+}
+
+/* Left accent bar matching the site's purple→pink gradient */
+.founder-card::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 32px; bottom: 32px;
+  width: 4px;
+  border-radius: 0 4px 4px 0;
+  background: linear-gradient(180deg, var(--purple), var(--pink));
+}
+
+/* Decorative large quote mark */
+.founder-quote-mark {
+  font-size: 7rem;
+  line-height: 1;
+  color: rgba(91,44,131,0.08);
+  font-family: Georgia, serif;
+  position: absolute;
+  top: 12px;
+  left: 44px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.founder-body {
+  position: relative;
+  z-index: 1;
+}
+
+.founder-body p {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--muted);
+  margin: 0 0 18px;
+}
+
+.founder-body p:last-of-type {
+  margin-bottom: 28px;
+}
+
+.founder-sig {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(91,44,131,0.12);
+}
+
+.founder-name {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--purple-900);
+  letter-spacing: 0.02em;
+}
+
+.founder-title {
+  font-size: 0.85rem;
+  color: var(--purple);
+  letter-spacing: 0.02em;
+}
+
+/* ── Mobile ── */
+@media (max-width: 900px) {
+  .founder-card {
+    padding: 40px 36px 40px 40px;
+  }
+}
+
+@media (max-width: 700px) {
+  .founder-card {
+    padding: 32px 20px 32px 24px;
+    border-radius: 18px;
+  }
+  .founder-quote-mark {
+    font-size: 4rem;
+    left: 20px;
+    top: 8px;
+  }
+  .founder-body p {
+    font-size: 0.92rem;
+    line-height: 1.75;
+  }
+  .founder-name {
+    font-size: 0.95rem;
+  }
+  .founder-title {
+    font-size: 0.8rem;
+  }
+  .founder-card::before {
+    top: 20px; bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .founder-card {
+    padding: 28px 16px 28px 20px;
+  }
+  .founder-quote-mark {
+    font-size: 3rem;
+    left: 16px;
+    top: 6px;
+  }
+  .founder-body p {
+    font-size: 0.88rem;
+  }
+}
 
 /* =========================
    RESPONSIVE DESIGN
