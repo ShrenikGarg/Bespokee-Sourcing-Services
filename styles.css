@@ -515,10 +515,11 @@ main{
   text-decoration:none;
 }
 
-.header-brand span{
+.header-brand .brand-text{
   display:flex;
   flex-direction:column;
-  gap:1px;
+  align-items:flex-start;
+  gap:2px;
 }
 
 .header-brand-name{
@@ -530,11 +531,12 @@ main{
   white-space:nowrap;
 }
 
-.header-brand-tagline{
-  font-size:0.72rem;
+.header-brand-tagline,
+.brand-tagline{
+  font-size:1rem;
   font-weight:500;
   letter-spacing:0.03em;
-  color:#7a5c9a;
+  color:var(--purple);
   white-space:nowrap;
 }
 
@@ -548,7 +550,7 @@ main{
 }
 
 .site-header--scroll.site-header--visible .brand-logo{
-  width:48px;
+  height:28px;
 }
 
 .site-header--scroll.site-header--visible .header-brand-name{
@@ -557,7 +559,8 @@ main{
 
 .brand-logo{
   display:inline-block;
-  border-radius:8px;
+  height:50px;
+  width:auto;
   object-fit:contain;
 }
 
@@ -1244,13 +1247,29 @@ textarea:focus{
 .footer-brand{
   display:flex;
   align-items:center;
-  gap:14px;
+  gap:16px;
   padding-bottom:28px;
 }
 
 .footer-brand img{
-  border-radius:8px;
   flex-shrink:0;
+}
+
+.footer-logo-old{
+  border-radius:8px;
+}
+
+.footer-logo-new-wrap{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:4px;
+}
+
+.footer-logo-new{
+  height:30px;
+  width:auto;
+  object-fit:contain;
 }
 
 .footer-name{
@@ -1296,6 +1315,7 @@ textarea:focus{
   color:#6a5480;
   border-top:1px solid rgba(255,255,255,0.08);
   padding-top:20px;
+  text-align:center;
 }
 
 @media (max-width:700px){
@@ -1305,6 +1325,11 @@ textarea:focus{
   }
   .footer-brand{
     padding-bottom:20px;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .footer-logo-new{
+    height:28px;
   }
   .footer-links{
     flex-direction:row;
@@ -1568,17 +1593,18 @@ textarea:focus{
 
   /* Header: shrink logo and brand name */
   .brand-logo{
-    width:40px !important;
-    height:40px !important;
+    height:28px !important;
+    width:auto !important;
   }
-  .site-header .containers span,
-  .header-brand span{
+  .site-header .containers .brand-text,
+  .header-brand .brand-text{
     font-size:0.85rem;
   }
   .header-brand-name{
     font-size:0.88rem;
   }
-  .header-brand-tagline{
+  .header-brand-tagline,
+  .brand-tagline{
     font-size:0.68rem;
   }
 
@@ -1683,8 +1709,8 @@ textarea:focus{
   }
 
   /* Header: show brand name on mobile with smaller font */
-  .site-header .containers span,
-  .header-brand span{
+  .site-header .containers .brand-text,
+  .header-brand .brand-text{
     display:flex;
     flex-direction:column;
     gap:1px;
@@ -1694,15 +1720,16 @@ textarea:focus{
     white-space:nowrap;
     color:#2B163E;
   }
-  .header-brand-tagline{
+  .header-brand-tagline,
+  .brand-tagline{
     font-size:0.52rem;
     white-space:nowrap;
     color:#7a5c9a;
   }
 
   .brand-logo{
-    width:28px !important;
-    height:28px !important;
+    height:26px !important;
+    width:auto !important;
   }
 
   /* Nav on mobile: hide About Us, keep Contact Us only */
