@@ -538,6 +538,7 @@ main{
   letter-spacing:0.03em;
   color:var(--purple);
   white-space:nowrap;
+  margin-left:5px;
 }
 
 .site-header--scroll{
@@ -1251,14 +1252,6 @@ textarea:focus{
   padding-bottom:28px;
 }
 
-.footer-brand img{
-  flex-shrink:0;
-}
-
-.footer-logo-old{
-  border-radius:8px;
-}
-
 .footer-logo-new-wrap{
   display:flex;
   flex-direction:column;
@@ -1267,9 +1260,10 @@ textarea:focus{
 }
 
 .footer-logo-new{
-  height:30px;
+  height:41px;
   width:auto;
   object-fit:contain;
+  flex-shrink:0;
 }
 
 .footer-name{
@@ -1327,9 +1321,6 @@ textarea:focus{
     padding-bottom:20px;
     flex-wrap:wrap;
     gap:12px;
-  }
-  .footer-logo-new{
-    height:28px;
   }
   .footer-links{
     flex-direction:row;
