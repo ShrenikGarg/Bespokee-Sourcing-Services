@@ -538,7 +538,7 @@ main{
   letter-spacing:0.03em;
   color:var(--purple);
   white-space:nowrap;
-  margin-left:5px;
+  margin-left:15px;
 }
 
 .site-header--scroll{
@@ -560,7 +560,7 @@ main{
 
 .brand-logo{
   display:inline-block;
-  height:50px;
+  height:48px;
   width:auto;
   object-fit:contain;
 }
